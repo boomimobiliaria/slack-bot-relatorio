@@ -17,7 +17,7 @@ app.post('/slack/relatorio', async (req, res) => {
 
   const modal = {
     type: 'modal',
-    title: { type: 'plain_text', text: 'Relatório financeiro diário' },
+    title: { type: 'plain_text', text: 'Relatório financeiro' },
     submit: { type: 'plain_text', text: 'Enviar' },
     callback_id: 'relatorio_modal',
     blocks: [
