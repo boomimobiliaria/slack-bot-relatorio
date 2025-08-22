@@ -61,17 +61,28 @@ app.post('/slack/relatorio', async (req, res) => {
     ]
   };
 
-  await axios.post('https://slack.com/api/views.open', {
-    trigger_id: triggerId,
-    view: modal
-  }, {
-    headers: {
-      Authorization: `Bearer ${SLACK_BOT_TOKEN}`,
-      'Content-Type': 'application/json'
-    }
-  });
+try {
+    const response = await axios.post('https://slack.com/api/views.open', {
+      trigger_id: triggerId,
+      view: modal
+    }, {
+      headers: {
+        Authorization: `Bearer ${SLACK_BOT_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
 
-  res.status(200).send();
+    console.log('📤 Resposta da Slack API:', response.data);
+
+    if (!response.data.ok) {
+      console.error('⚠️ Erro ao abrir modal:', response.data.error);
+    }
+
+    res.status(200).send();
+  } catch (error) {
+    console.error('❌ Erro inesperado ao abrir modal:', error.response?.data || error.message);
+    res.status(500).send();
+  }
 });
 
 // 2️⃣ Recebe os dados preenchidos no modal
