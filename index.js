@@ -21,12 +21,43 @@ app.post('/slack/relatorio', async (req, res) => {
     submit: { type: 'plain_text', text: 'Enviar' },
     callback_id: 'relatorio_modal',
     blocks: [
-      { type: 'input', block_id: 'especie', label: { type: 'plain_text', text: 'Informe o saldo em espécie:' }, element: { type: 'plain_text_input', action_id: 'valor' } },
-      { type: 'input', block_id: 'santander', label: { type: 'plain_text', text: 'Informe o saldo no Santander:' }, element: { type: 'plain_text_input', action_id: 'valor' } },
-      { type: 'input', block_id: 'itau', label: { type: 'plain_text', text: 'Informe o saldo no Itaú:' }, element: { type: 'plain_text_input', action_id: 'valor' } },
-      { type: 'input', block_id: 'cora', label: { type: 'plain_text', text: 'Informe o saldo no Cora:' }, element: { type: 'plain_text_input', action_id: 'valor' } },
-      { type: 'input', block_id: 'contas', label: { type: 'plain_text', text: 'Informe o valor das contas a pagar:' }, element: { type: 'plain_text_input', action_id: 'valor' } },
-      { type: 'input', block_id: 'repasses', label: { type: 'plain_text', text: 'Informe o valor dos repasses:' }, element: { type: 'plain_text_input', action_id: 'valor' } }
+      {
+        type: 'input',
+        block_id: 'especie',
+        label: { type: 'plain_text', text: 'Informe o saldo em espécie:' },
+        element: { type: 'plain_text_input', action_id: 'especie_valor' }
+      },
+      {
+        type: 'input',
+        block_id: 'santander',
+        label: { type: 'plain_text', text: 'Informe o saldo no Santander:' },
+        element: { type: 'plain_text_input', action_id: 'santander_valor' }
+      },
+      {
+        type: 'input',
+        block_id: 'itau',
+        label: { type: 'plain_text', text: 'Informe o saldo no Itaú:' },
+        element: { type: 'plain_text_input', action_id: 'itau_valor' }
+      },
+      {
+        type: 'input',
+        block_id: 'cora',
+        label: { type: 'plain_text', text: 'Informe o saldo no Cora:' },
+        element: { type: 'plain_text_input', action_id: 'cora_valor' }
+      },
+      {
+        type: 'input',
+        block_id: 'contas',
+        label: { type: 'plain_text',
+          text: 'Informe o valor das contas a pagar:' },
+          element: { type: 'plain_text_input', action_id: 'contas_valor' }
+        },
+      {
+        type: 'input',
+        block_id: 'repasses',
+        label: { type: 'plain_text', text: 'Informe o valor dos repasses:' },
+        element: { type: 'plain_text_input', action_id: 'repasses_valor' }
+      }
     ]
   };
 
@@ -50,7 +81,7 @@ app.post('/slack/interativo', async (req, res) => {
 
   const valores = {};
   for (const campo of ['especie', 'santander', 'itau', 'cora', 'contas', 'repasses']) {
-    valores[campo] = parseFloat(payload.view.state.values[campo].valor.value.replace(',', '.')) || 0;
+    valores[campo] = parseFloat(payload.view.state.values[campo][`${campo}_valor`].value.replace(',', '.')) || 0;
   }
 
   const saldoInicial = valores.especie + valores.santander + valores.itau + valores.cora;
