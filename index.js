@@ -12,6 +12,7 @@ const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 
 // 1️⃣ Recebe o comando /relatorio e abre o modal
 app.post('/slack/relatorio', async (req, res) => {
+  console.log('🔔 Slash command recebido:', req.body);
   const triggerId = req.body.trigger_id;
 
   const modal = {
