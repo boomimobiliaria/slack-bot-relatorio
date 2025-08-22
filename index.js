@@ -104,18 +104,18 @@ app.post('/slack/interativo', async (req, res) => {
 📅 *Relatório do dia - ${dataAtual}*
 
 🔵 *Saldo inicial*:
-• Espécie: R$ ${valores.especie.toFixed(2)}
-• Santander: R$ ${valores.santander.toFixed(2)}
-• Itaú: R$ ${valores.itau.toFixed(2)}
-• Cora: R$ ${valores.cora.toFixed(2)}
-• *Total*: R$ ${saldoInicial.toFixed(2)}
+• Espécie: ${valores.especie.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+• Santander: ${valores.santander.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+• Itaú: ${valores.itau.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+• Cora: ${valores.cora.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+• *Total*: ${saldoInicial.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
 
 🔴 *Saídas do dia*:
-• Contas a pagar: -R$ ${valores.contas.toFixed(2)}
-• Repasses: -R$ ${valores.repasses.toFixed(2)}
-• *Total de saídas*: -R$ ${totalSaidas.toFixed(2)}
+• Contas a pagar: -${valores.contas.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+• Repasses: -${valores.repasses.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+• *Total de saídas*: -${totalSaidas.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
 
-📉 *Saldo final após saídas*: R$ ${saldoFinal.toFixed(2)}
+📉 *Saldo final após saídas*: ${saldoFinal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
 `;
 
   await axios.post(SLACK_WEBHOOK_URL, { text: relatorio });
