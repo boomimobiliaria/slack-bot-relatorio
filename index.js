@@ -95,7 +95,7 @@ app.post('/slack/interativo', async (req, res) => {
     valores[campo] = parseFloat(payload.view.state.values[campo][`${campo}_valor`].value.replace(',', '.')) || 0;
   }
 
-  const saldoInicial = valores.especie + valores.santander + valores.itau + valores.cora;
+  const saldoInicial = valores.santander + valores.itau + valores.cora; // removido valores.especie no somatório conforme solicitação do Wanderson
   const totalSaidas = valores.contas + valores.repasses;
   const saldoFinal = saldoInicial - totalSaidas;
   const dataAtual = new Date().toLocaleDateString('pt-BR');
